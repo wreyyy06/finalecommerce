@@ -22,8 +22,8 @@ SECRET_KEY = config('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = config('DEBUG', default=True, cast=bool)
 
-ALLOWED_HOSTS = ["*"]
-
+# Set your production hosts explicitly instead of wildcard "*"
+ALLOWED_HOSTS = ["finalecommerce-4.onrender.com"]
 
 # Application definition
 
@@ -77,7 +77,6 @@ WSGI_APPLICATION = 'marky.wsgi.application'
 
 AUTH_USER_MODEL = 'accounts.Account'
 
-
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
@@ -87,7 +86,6 @@ DATABASES = {
         'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/5.1/ref/settings/#auth-password-validators
@@ -107,7 +105,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
 # Internationalization
 # https://docs.djangoproject.com/en/5.1/topics/i18n/
 
@@ -118,7 +115,6 @@ TIME_ZONE = 'UTC'
 USE_I18N = True
 
 USE_TZ = True
-
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
@@ -138,12 +134,10 @@ MESSAGE_TAGS = {
     messages.ERROR: "danger",
 }
 
-
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-
 
 # SMTP configuration
 # For sending emails via Gmail
@@ -154,11 +148,15 @@ EMAIL_USE_TLS = config('EMAIL_USE_TLS', cast=bool)
 EMAIL_HOST_USER = config('EMAIL_HOST_USER')
 EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD')
 
-
 # CSRF Settings
 CSRF_COOKIE_HTTPONLY = True  # Prevents access to the CSRF token via JavaScript (recommended for security)
-CSRF_COOKIE_SECURE = False   # Set to True if using HTTPS
+CSRF_COOKIE_SECURE = True    # Set True because your site uses HTTPS
 CSRF_USE_SESSIONS = True     # Use sessions for CSRF token storage
+
+# Add your deployed domain to trusted origins
+CSRF_TRUSTED_ORIGINS = [
+    "https://finalecommerce-4.onrender.com",
+]
 
 # Session Settings
 SESSION_ENGINE = 'django.contrib.sessions.backends.db'  # Default session backend
